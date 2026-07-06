@@ -27,6 +27,19 @@ export async function Navbar() {
           </Link>
         </nav>
 
+        <form
+          action="/shop"
+          method="GET"
+          className="hidden md:block flex-1 max-w-sm mx-6"
+        >
+          <input
+            type="search"
+            name="search"
+            placeholder="Search products..."
+            className="w-full rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          />
+        </form>
+
         <div className="flex items-center gap-4 text-sm font-medium">
           <Link href="/cart" className="relative hover:text-emerald-600 transition-colors">
             Cart
