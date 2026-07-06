@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { ProductCard } from "@/components/product-card";
-import { ShopHeroBackground } from "@/components/shop-hero-background";
+import { HeroFoodBackground } from "@/components/hero-food-background";
 
 export const metadata: Metadata = {
   title: "Shop | LeanCart",
@@ -64,7 +64,7 @@ export default async function ShopPage({
   return (
     <div className="mx-auto max-w-6xl px-6 py-16">
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-50 via-white to-emerald-50 px-6 py-12 sm:px-10 sm:py-16 mb-12">
-        <ShopHeroBackground />
+        <HeroFoodBackground />
 
         <div className="relative">
           <div className="mb-8">

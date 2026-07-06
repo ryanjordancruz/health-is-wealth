@@ -16,7 +16,7 @@ const SCATTERED_ITEMS = [
   { emoji: "🌱", top: "5%", left: "48%", size: "text-6xl", rotate: "-rotate-6" },
 ];
 
-export function ShopHeroBackground() {
+export function HeroFoodBackground() {
   return (
     <div
       aria-hidden="true"
