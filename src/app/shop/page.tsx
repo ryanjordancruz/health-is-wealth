@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { ProductCard } from "@/components/product-card";
+import { ShopHeroBackground } from "@/components/shop-hero-background";
 
 export const metadata: Metadata = {
   title: "Shop | LeanCart",
@@ -62,57 +63,63 @@ export default async function ShopPage({
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-16">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-stone-900 mb-3">Shop</h1>
-        <p className="text-lg text-stone-500">
-          Healthy, high-protein, low-calorie groceries and supplements — search or browse by
-          category below.
-        </p>
-      </div>
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-50 via-white to-emerald-50 px-6 py-12 sm:px-10 sm:py-16 mb-12">
+        <ShopHeroBackground />
 
-      <form action="/shop" method="GET" className="mb-6">
-        {activeCategory && <input type="hidden" name="category" value={activeCategory} />}
-        <div className="relative max-w-xl">
-          <input
-            type="search"
-            name="search"
-            defaultValue={activeSearch}
-            placeholder="Search products, like 'protein powder' or 'spinach'..."
-            className="w-full rounded-full border border-stone-200 bg-white px-5 py-3 pr-24 text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-          />
-          <button
-            type="submit"
-            className="absolute right-1.5 top-1.5 rounded-full bg-emerald-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-emerald-500 transition-colors"
-          >
-            Search
-          </button>
+        <div className="relative">
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold text-stone-900 mb-3">Shop</h1>
+            <p className="text-lg text-stone-500">
+              Healthy, high-protein, low-calorie groceries and supplements — search or browse by
+              category below.
+            </p>
+          </div>
+
+          <form action="/shop" method="GET" className="mb-6">
+            {activeCategory && <input type="hidden" name="category" value={activeCategory} />}
+            <div className="relative max-w-xl">
+              <input
+                type="search"
+                name="search"
+                defaultValue={activeSearch}
+                placeholder="Search products, like 'protein powder' or 'spinach'..."
+                className="w-full rounded-full border border-stone-200 bg-white px-5 py-3 pr-24 text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              />
+              <button
+                type="submit"
+                className="absolute right-1.5 top-1.5 rounded-full bg-emerald-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-emerald-500 transition-colors"
+              >
+                Search
+              </button>
+            </div>
+          </form>
+
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href={buildShopHref(activeSearch, "")}
+              className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                activeCategory === ""
+                  ? "bg-emerald-600 text-white"
+                  : "bg-white text-stone-700 shadow-sm hover:bg-stone-100"
+              }`}
+            >
+              All
+            </Link>
+            {categories.map((cat) => (
+              <Link
+                key={cat}
+                href={buildShopHref(activeSearch, cat)}
+                className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                  activeCategory === cat
+                    ? "bg-emerald-600 text-white"
+                    : "bg-white text-stone-700 hover:bg-stone-100"
+                }`}
+              >
+                {cat}
+              </Link>
+            ))}
+          </div>
         </div>
-      </form>
-
-      <div className="flex flex-wrap gap-2 mb-12">
-        <Link
-          href={buildShopHref(activeSearch, "")}
-          className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
-            activeCategory === ""
-              ? "bg-emerald-600 text-white"
-              : "bg-stone-100 text-stone-700 hover:bg-stone-200"
-          }`}
-        >
-          All
-        </Link>
-        {categories.map((cat) => (
-          <Link
-            key={cat}
-            href={buildShopHref(activeSearch, cat)}
-            className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
-              activeCategory === cat
-                ? "bg-emerald-600 text-white"
-                : "bg-stone-100 text-stone-700 hover:bg-stone-200"
-            }`}
-          >
-            {cat}
-          </Link>
-        ))}
       </div>
 
       {hasFilters && (
