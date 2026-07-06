@@ -39,7 +39,7 @@ export default async function CheckoutSuccessPage({
           We couldn&apos;t find that order. If you just checked out, check your account or try
           again.
         </p>
-        <Link href="/shop" className="text-emerald-600 hover:underline">
+        <Link href="/" className="text-emerald-600 hover:underline">
           Back to shop
         </Link>
       </div>
@@ -83,7 +83,7 @@ export default async function CheckoutSuccessPage({
         </span>
       </div>
 
-      <Link href="/shop" className="inline-block mt-10 text-emerald-600 hover:underline">
+      <Link href="/" className="inline-block mt-10 text-emerald-600 hover:underline">
         Continue shopping
       </Link>
     </div>

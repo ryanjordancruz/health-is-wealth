@@ -27,7 +27,7 @@ export default async function CartPage() {
         <div className="text-center py-20">
           <p className="text-lg text-stone-500 mb-6">Your cart is empty.</p>
           <Link
-            href="/shop"
+            href="/"
             className="rounded-full bg-emerald-600 px-6 py-3 font-medium text-white hover:bg-emerald-500 transition-colors"
           >
             Browse the shop

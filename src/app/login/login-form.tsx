@@ -14,7 +14,7 @@ type FormValues = z.infer<typeof loginSchema>;
 export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/shop";
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
   const [formError, setFormError] = useState<string | null>(null);
 
   const {

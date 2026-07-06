@@ -16,7 +16,7 @@ export function AddToCartButton({ productId }: { productId: string }) {
     });
 
     if (response.status === 401) {
-      router.push(`/login?callbackUrl=${encodeURIComponent("/shop")}`);
+      router.push(`/login?callbackUrl=${encodeURIComponent("/")}`);
       return;
     }
 

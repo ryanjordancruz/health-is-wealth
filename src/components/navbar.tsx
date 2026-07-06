@@ -21,14 +21,8 @@ export async function Navbar() {
           LeanCart
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-stone-700">
-          <Link href="/shop" className="hover:text-emerald-600 transition-colors">
-            Shop
-          </Link>
-        </nav>
-
         <form
-          action="/shop"
+          action="/"
           method="GET"
           className="hidden md:block flex-1 max-w-sm mx-6"
         >

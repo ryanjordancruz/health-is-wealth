@@ -1,40 +1,175 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { prisma } from "@/lib/prisma";
+import { ProductCard } from "@/components/product-card";
 import { HeroFoodBackground } from "@/components/hero-food-background";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "LeanCart | Healthy, High-Protein Groceries",
+  description: "Browse healthy, high-protein, low-calorie groceries and supplements.",
+};
+
+function buildShopHref(search: string, category: string) {
+  const params = new URLSearchParams();
+  if (search) params.set("search", search);
+  if (category) params.set("category", category);
+  const qs = params.toString();
+  return qs ? `/?${qs}` : "/";
+}
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ search?: string; category?: string }>;
+}) {
+  const { search, category } = await searchParams;
+  const activeSearch = search?.trim() ?? "";
+  const activeCategory = category?.trim() ?? "";
+
+  const [categoryRows, products] = await Promise.all([
+    prisma.product.findMany({
+      where: { active: true },
+      distinct: ["category"],
+      select: { category: true },
+      orderBy: { category: "asc" },
+    }),
+    prisma.product.findMany({
+      where: {
+        active: true,
+        ...(activeCategory ? { category: activeCategory } : {}),
+        ...(activeSearch
+          ? {
+              OR: [
+                { name: { contains: activeSearch } },
+                { description: { contains: activeSearch } },
+                { category: { contains: activeSearch } },
+              ],
+            }
+          : {}),
+      },
+      orderBy: [{ category: "asc" }, { name: "asc" }],
+    }),
+  ]);
+  const categories = categoryRows.map((row) => row.category);
+
+  const byCategory = new Map<string, typeof products>();
+  for (const product of products) {
+    const list = byCategory.get(product.category) ?? [];
+    list.push(product);
+    byCategory.set(product.category, list);
+  }
+
+  const hasFilters = activeSearch !== "" || activeCategory !== "";
+
   return (
     <div className="mx-auto max-w-6xl px-6 py-16">
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-50 via-white to-emerald-50 px-6 py-24 sm:px-10 md:py-32">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-50 via-white to-emerald-50 px-6 py-12 sm:px-10 sm:py-16 mb-12">
         <HeroFoodBackground />
 
-        <div className="relative max-w-2xl">
-          <span className="inline-block rounded-full bg-emerald-50 text-emerald-700 px-3 py-1 text-sm font-medium mb-6">
-            High-protein. Low-calorie. Actually tasty.
-          </span>
-          <h1 className="text-4xl md:text-5xl font-bold text-stone-900 tracking-tight mb-6">
-            Groceries built for your macros, not your cravings.
-          </h1>
-          <p className="text-lg text-stone-500 mb-8">
-            LeanCart curates lean proteins, plant-based staples, and low-calorie snacks so hitting
-            your nutrition goals doesn&apos;t mean giving up flavor. Browse the shop, build your
-            cart, and check out securely with Stripe.
-          </p>
-          <div className="flex gap-4">
+        <div className="relative">
+          <div className="mb-8 max-w-2xl">
+            <span className="inline-block rounded-full bg-white text-emerald-700 shadow-sm px-3 py-1 text-sm font-medium mb-4">
+              High-protein. Low-calorie. Actually tasty.
+            </span>
+            <h1 className="text-4xl md:text-5xl font-bold text-stone-900 tracking-tight mb-3">
+              Groceries built for your macros, not your cravings.
+            </h1>
+            <p className="text-lg text-stone-500">
+              LeanCart curates lean proteins, plant-based staples, and low-calorie snacks —
+              search or browse by category below.
+            </p>
+          </div>
+
+          <form action="/" method="GET" className="mb-6">
+            {activeCategory && <input type="hidden" name="category" value={activeCategory} />}
+            <div className="relative max-w-xl">
+              <input
+                type="search"
+                name="search"
+                defaultValue={activeSearch}
+                placeholder="Search products, like 'protein powder' or 'spinach'..."
+                className="w-full rounded-full border border-stone-200 bg-white px-5 py-3 pr-24 text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              />
+              <button
+                type="submit"
+                className="absolute right-1.5 top-1.5 rounded-full bg-emerald-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-emerald-500 transition-colors"
+              >
+                Search
+              </button>
+            </div>
+          </form>
+
+          <div className="flex flex-wrap gap-2">
             <Link
-              href="/shop"
-              className="rounded-full bg-emerald-600 px-6 py-3 font-medium text-white hover:bg-emerald-500 transition-colors"
+              href={buildShopHref(activeSearch, "")}
+              className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                activeCategory === ""
+                  ? "bg-emerald-600 text-white"
+                  : "bg-white text-stone-700 shadow-sm hover:bg-stone-100"
+              }`}
             >
-              Browse the shop
+              All
             </Link>
-            <Link
-              href="/register"
-              className="rounded-full border border-stone-300 bg-white px-6 py-3 font-medium text-stone-700 hover:border-emerald-400 hover:text-emerald-700 transition-colors"
-            >
-              Create an account
-            </Link>
+            {categories.map((cat) => (
+              <Link
+                key={cat}
+                href={buildShopHref(activeSearch, cat)}
+                className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                  activeCategory === cat
+                    ? "bg-emerald-600 text-white"
+                    : "bg-white text-stone-700 shadow-sm hover:bg-stone-100"
+                }`}
+              >
+                {cat}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
+
+      {hasFilters && (
+        <div className="mb-8 flex items-center justify-between text-sm text-stone-500">
+          <p>
+            {products.length} result{products.length === 1 ? "" : "s"}
+            {activeSearch && (
+              <>
+                {" "}
+                for <span className="font-medium text-stone-700">&quot;{activeSearch}&quot;</span>
+              </>
+            )}
+            {activeCategory && (
+              <>
+                {" "}
+                in <span className="font-medium text-stone-700">{activeCategory}</span>
+              </>
+            )}
+          </p>
+          <Link href="/" className="text-emerald-600 hover:underline">
+            Clear filters
+          </Link>
+        </div>
+      )}
+
+      {products.length === 0 ? (
+        <div className="text-center py-20">
+          <p className="text-lg text-stone-500">
+            {hasFilters
+              ? "No products match your search. Try a different term or category."
+              : "No products available yet. Check back soon!"}
+          </p>
+        </div>
+      ) : (
+        Array.from(byCategory.entries()).map(([cat, items]) => (
+          <section key={cat} className="mb-12">
+            <h2 className="text-xl font-semibold text-stone-900 mb-4">{cat}</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {items.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          </section>
+        ))
+      )}
     </div>
   );
 }
