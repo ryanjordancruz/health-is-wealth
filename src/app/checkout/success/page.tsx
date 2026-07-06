@@ -3,6 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { ProductThumbnail } from "@/components/product-thumbnail";
 
 export const metadata: Metadata = {
   title: "Order confirmed | LeanCart",
@@ -61,9 +62,12 @@ export default async function CheckoutSuccessPage({
       <div className="bg-white border border-stone-200 rounded-2xl px-6">
         {order.items.map((item) => (
           <div key={item.id} className="flex items-center justify-between py-4 border-b border-stone-200 last:border-b-0">
-            <div>
-              <p className="font-medium text-stone-900">{item.product.name}</p>
-              <p className="text-sm text-stone-500">Qty {item.quantity}</p>
+            <div className="flex items-center gap-4">
+              <ProductThumbnail category={item.product.category} size="sm" />
+              <div>
+                <p className="font-medium text-stone-900">{item.product.name}</p>
+                <p className="text-sm text-stone-500">Qty {item.quantity}</p>
+              </div>
             </div>
             <p className="font-medium text-stone-900">
               ${((item.priceCents * item.quantity) / 100).toFixed(2)}

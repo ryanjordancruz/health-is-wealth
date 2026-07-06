@@ -41,6 +41,7 @@ export default async function CartPage() {
                 key={item.productId}
                 productId={item.productId}
                 name={item.product.name}
+                category={item.product.category}
                 priceCents={item.product.priceCents}
                 quantity={item.quantity}
                 servingSize={item.product.servingSize}

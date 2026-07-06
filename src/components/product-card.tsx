@@ -1,8 +1,10 @@
 import { AddToCartButton } from "@/components/add-to-cart-button";
+import { ProductThumbnail } from "@/components/product-thumbnail";
 
 type Product = {
   id: string;
   name: string;
+  category: string;
   description: string;
   priceCents: number;
   calories: number;
@@ -13,6 +15,7 @@ type Product = {
 export function ProductCard({ product }: { product: Product }) {
   return (
     <div className="flex flex-col bg-white border border-stone-200 rounded-2xl overflow-hidden hover:shadow-md transition-shadow">
+      <ProductThumbnail category={product.category} />
       <div className="p-5 flex-1 flex flex-col">
         <h3 className="font-semibold text-stone-900 mb-1">{product.name}</h3>
         <p className="text-sm text-stone-500 line-clamp-2 mb-3 flex-1">{product.description}</p>
