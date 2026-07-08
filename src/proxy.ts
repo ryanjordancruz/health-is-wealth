@@ -3,8 +3,8 @@ import { auth } from "@/auth";
 
 // Next.js 16 renamed `middleware.ts` -> `proxy.ts`. This runs on (almost)
 // every page request for two independent reasons:
-//   1. Auth gating for /cart — a UX-layer redirect only; the page itself
-//      (and every cart/checkout API route) re-checks the session
+//   1. Auth gating for /saved — a UX-layer redirect only; the page itself
+//      (and every saved-items/views API route) re-checks the session
 //      server-side (see src/lib/authz.ts), so a bypassed or stale proxy
 //      check can never grant real access on its own.
 //   2. Issuing a per-request CSP nonce, following Next.js's documented
@@ -21,13 +21,7 @@ export default auth((req) => {
     "img-src 'self' data: blob:",
     "font-src 'self'",
     "connect-src 'self'",
-    // 'self' plus Stripe's checkout domain: the cart page's form posts to
-    // our own /api/checkout, which then 303-redirects to Stripe's hosted
-    // Checkout page. Browsers enforce form-action against the *final*
-    // destination of a redirect chain started by a form submit, so
-    // without this the redirect to Stripe gets silently blocked even
-    // though it's a legitimate, server-validated redirect.
-    "form-action 'self' https://checkout.stripe.com",
+    "form-action 'self'",
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "object-src 'none'",
@@ -40,7 +34,7 @@ export default auth((req) => {
   const { pathname } = req.nextUrl;
   const session = req.auth;
 
-  if (pathname.startsWith("/cart") && !session?.user) {
+  if (pathname.startsWith("/saved") && !session?.user) {
     const loginUrl = new URL("/login", req.nextUrl);
     loginUrl.searchParams.set("callbackUrl", pathname);
     return NextResponse.redirect(loginUrl);

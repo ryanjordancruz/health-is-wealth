@@ -72,7 +72,7 @@ export function RegisterForm() {
         <input
           autoComplete="name"
           {...register("name")}
-          className="w-full rounded-lg border border-stone-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          className="w-full rounded-lg border border-stone-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500"
         />
         {errors.name && <p className="text-sm text-red-600 mt-1">{errors.name.message}</p>}
       </div>
@@ -83,7 +83,7 @@ export function RegisterForm() {
           type="email"
           autoComplete="email"
           {...register("email")}
-          className="w-full rounded-lg border border-stone-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          className="w-full rounded-lg border border-stone-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500"
         />
         {errors.email && <p className="text-sm text-red-600 mt-1">{errors.email.message}</p>}
       </div>
@@ -94,7 +94,7 @@ export function RegisterForm() {
           type="password"
           autoComplete="new-password"
           {...register("password")}
-          className="w-full rounded-lg border border-stone-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          className="w-full rounded-lg border border-stone-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500"
         />
         {errors.password && <p className="text-sm text-red-600 mt-1">{errors.password.message}</p>}
       </div>
@@ -105,31 +105,26 @@ export function RegisterForm() {
           type="password"
           autoComplete="new-password"
           {...register("confirmPassword")}
-          className="w-full rounded-lg border border-stone-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          className="w-full rounded-lg border border-stone-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500"
         />
         {errors.confirmPassword && (
           <p className="text-sm text-red-600 mt-1">{errors.confirmPassword.message}</p>
         )}
       </div>
 
-      <p className="text-xs text-stone-500">
-        Payment details are collected securely by Stripe at checkout — we never see or store your
-        card information.
-      </p>
-
       {formError && <p className="text-sm text-red-600">{formError}</p>}
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-full bg-emerald-600 px-4 py-2.5 text-white font-medium hover:bg-emerald-500 transition-colors disabled:opacity-50"
+        className="w-full rounded-full bg-brand-600 px-4 py-2.5 text-white font-medium hover:bg-brand-500 transition-colors disabled:opacity-50"
       >
         {isSubmitting ? "Creating account..." : "Sign up"}
       </button>
 
       <p className="text-sm text-stone-500 text-center">
         Already have an account?{" "}
-        <Link href="/login" className="text-emerald-600 hover:underline">
+        <Link href="/login" className="text-brand-600 hover:underline">
           Log in
         </Link>
       </p>

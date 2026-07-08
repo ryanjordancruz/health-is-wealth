@@ -1,13 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafaf9;
+  --background: #faf9f4;
   --foreground: #1c1917;
+
+  /* Warmer, more natural green (Sprouts Farmers Market-inspired) in place
+     of the cooler default Tailwind emerald scale used before the pivot. */
+  --brand-50: #f6f7ed;
+  --brand-300: #b9d18a;
+  --brand-500: #7da33f;
+  --brand-600: #5f8a2e;
+  --brand-700: #4a6f24;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand-50: var(--brand-50);
+  --color-brand-300: var(--brand-300);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

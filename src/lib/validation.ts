@@ -11,7 +11,10 @@ export const loginSchema = z.object({
   password: z.string().min(1).max(200),
 });
 
-export const cartItemSchema = z.object({
+export const savedItemSchema = z.object({
   productId: z.string().min(1),
-  quantity: z.coerce.number().int().min(1).max(50),
+});
+
+export const viewedItemSchema = z.object({
+  productId: z.string().min(1),
 });

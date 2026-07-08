@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
 import { ProductCard } from "@/components/product-card";
+import { ProductThumbnail } from "@/components/product-thumbnail";
+import { BrandLinkButton } from "@/components/brand-link-button";
 import { HeroFoodBackground } from "@/components/hero-food-background";
 
 export const metadata: Metadata = {
-  title: "LeanCart | Healthy, High-Protein Groceries",
-  description: "Browse healthy, high-protein, low-calorie groceries and supplements.",
+  title: "The Protein Pantry | Find Real High-Protein Snacks",
+  description:
+    "Find your next favorite high-protein, low-calorie snack — from real brands you can trust.",
 };
 
 function buildShopHref(search: string, category: string) {
@@ -25,8 +29,11 @@ export default async function Home({
   const { search, category } = await searchParams;
   const activeSearch = search?.trim() ?? "";
   const activeCategory = category?.trim() ?? "";
+  const hasFilters = activeSearch !== "" || activeCategory !== "";
 
-  const [categoryRows, products] = await Promise.all([
+  const session = await auth();
+
+  const [categoryRows, products, savedRows, recentlyViewed] = await Promise.all([
     prisma.product.findMany({
       where: { active: true },
       distinct: ["category"],
@@ -49,8 +56,23 @@ export default async function Home({
       },
       orderBy: [{ category: "asc" }, { name: "asc" }],
     }),
+    session?.user
+      ? prisma.savedItem.findMany({
+          where: { userId: session.user.id },
+          select: { productId: true },
+        })
+      : Promise.resolve([]),
+    session?.user && !hasFilters
+      ? prisma.viewedItem.findMany({
+          where: { userId: session.user.id },
+          include: { product: true },
+          orderBy: { viewedAt: "desc" },
+          take: 10,
+        })
+      : Promise.resolve([]),
   ]);
   const categories = categoryRows.map((row) => row.category);
+  const savedIds = new Set(savedRows.map((row) => row.productId));
 
   const byCategory = new Map<string, typeof products>();
   for (const product of products) {
@@ -59,24 +81,22 @@ export default async function Home({
     byCategory.set(product.category, list);
   }
 
-  const hasFilters = activeSearch !== "" || activeCategory !== "";
-
   return (
     <div className="mx-auto max-w-6xl px-6 py-16">
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-50 via-white to-emerald-50 px-6 py-12 sm:px-10 sm:py-16 mb-12">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-50 via-white to-brand-50 px-6 py-12 sm:px-10 sm:py-16 mb-12">
         <HeroFoodBackground />
 
         <div className="relative">
           <div className="mb-8 max-w-2xl">
-            <span className="inline-block rounded-full bg-white text-emerald-700 shadow-sm px-3 py-1 text-sm font-medium mb-4">
-              High-protein. Low-calorie. Actually tasty.
+            <span className="inline-block rounded-full bg-white text-brand-700 shadow-sm px-3 py-1 text-sm font-medium mb-4">
+              High-protein. Low-calorie. Real brands.
             </span>
             <h1 className="text-4xl md:text-5xl font-bold text-stone-900 tracking-tight mb-3">
-              Groceries built for your macros, not your cravings.
+              Find your next favorite high-protein snack.
             </h1>
             <p className="text-lg text-stone-500">
-              LeanCart curates lean proteins, plant-based staples, and low-calorie snacks —
-              search or browse by category below.
+              The Protein Pantry curates high-protein, low-calorie snacks from real brands —
+              search or browse by category below, and we&apos;ll point you to where to buy it.
             </p>
           </div>
 
@@ -88,11 +108,11 @@ export default async function Home({
                 name="search"
                 defaultValue={activeSearch}
                 placeholder="Search products, like 'protein powder' or 'spinach'..."
-                className="w-full rounded-full border border-stone-200 bg-white px-5 py-3 pr-24 text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full rounded-full border border-stone-200 bg-white px-5 py-3 pr-24 text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-500"
               />
               <button
                 type="submit"
-                className="absolute right-1.5 top-1.5 rounded-full bg-emerald-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-emerald-500 transition-colors"
+                className="absolute right-1.5 top-1.5 rounded-full bg-brand-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-brand-500 transition-colors"
               >
                 Search
               </button>
@@ -104,7 +124,7 @@ export default async function Home({
               href={buildShopHref(activeSearch, "")}
               className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
                 activeCategory === ""
-                  ? "bg-emerald-600 text-white"
+                  ? "bg-brand-600 text-white"
                   : "bg-white text-stone-700 shadow-sm hover:bg-stone-100"
               }`}
             >
@@ -116,7 +136,7 @@ export default async function Home({
                 href={buildShopHref(activeSearch, cat)}
                 className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
                   activeCategory === cat
-                    ? "bg-emerald-600 text-white"
+                    ? "bg-brand-600 text-white"
                     : "bg-white text-stone-700 shadow-sm hover:bg-stone-100"
                 }`}
               >
@@ -126,6 +146,33 @@ export default async function Home({
           </div>
         </div>
       </div>
+
+      {recentlyViewed.length > 0 && (
+        <section className="mb-12">
+          <h2 className="text-xl font-semibold text-stone-900 mb-4">Recently viewed</h2>
+          <div className="flex gap-4 overflow-x-auto pb-2">
+            {recentlyViewed.map(({ product }) => (
+              <div
+                key={product.id}
+                className="flex items-center gap-3 bg-white border border-stone-200 rounded-2xl p-3 shrink-0 w-72"
+              >
+                <ProductThumbnail category={product.category} size="sm" />
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-medium text-stone-400 uppercase tracking-wide">
+                    {product.brand}
+                  </p>
+                  <p className="font-semibold text-stone-900 truncate text-sm">{product.name}</p>
+                </div>
+                <BrandLinkButton
+                  productId={product.id}
+                  brand={product.brand}
+                  externalUrl={product.externalUrl}
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {hasFilters && (
         <div className="mb-8 flex items-center justify-between text-sm text-stone-500">
@@ -144,7 +191,7 @@ export default async function Home({
               </>
             )}
           </p>
-          <Link href="/" className="text-emerald-600 hover:underline">
+          <Link href="/" className="text-brand-600 hover:underline">
             Clear filters
           </Link>
         </div>
@@ -164,7 +211,11 @@ export default async function Home({
             <h2 className="text-xl font-semibold text-stone-900 mb-4">{cat}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {items.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  isSaved={savedIds.has(product.id)}
+                />
               ))}
             </div>
           </section>

@@ -47,7 +47,7 @@ export function LoginForm() {
           type="email"
           autoComplete="email"
           {...register("email")}
-          className="w-full rounded-lg border border-stone-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          className="w-full rounded-lg border border-stone-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500"
         />
         {errors.email && <p className="text-sm text-red-600 mt-1">{errors.email.message}</p>}
       </div>
@@ -58,7 +58,7 @@ export function LoginForm() {
           type="password"
           autoComplete="current-password"
           {...register("password")}
-          className="w-full rounded-lg border border-stone-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          className="w-full rounded-lg border border-stone-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500"
         />
         {errors.password && <p className="text-sm text-red-600 mt-1">{errors.password.message}</p>}
       </div>
@@ -68,14 +68,14 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-full bg-emerald-600 px-4 py-2.5 text-white font-medium hover:bg-emerald-500 transition-colors disabled:opacity-50"
+        className="w-full rounded-full bg-brand-600 px-4 py-2.5 text-white font-medium hover:bg-brand-500 transition-colors disabled:opacity-50"
       >
         {isSubmitting ? "Logging in..." : "Log in"}
       </button>
 
       <p className="text-sm text-stone-500 text-center">
         Don&apos;t have an account?{" "}
-        <Link href="/register" className="text-emerald-600 hover:underline">
+        <Link href="/register" className="text-brand-600 hover:underline">
           Sign up
         </Link>
       </p>

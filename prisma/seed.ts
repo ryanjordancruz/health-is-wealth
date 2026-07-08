@@ -15,7 +15,18 @@ async function main() {
       create: product,
     });
   }
-  console.log(`Seeded ${products.length} products.`);
+
+  // Products are never hard-deleted (SavedItem/ViewedItem cascade off them),
+  // so anything dropped from the current catalog list just gets deactivated
+  // instead — it can still show up in a user's saved/recently-viewed list
+  // with a "no longer listed" badge.
+  const currentIds = products.map((product) => product.id);
+  const { count: deactivatedCount } = await prisma.product.updateMany({
+    where: { id: { notIn: currentIds }, active: true },
+    data: { active: false },
+  });
+
+  console.log(`Seeded ${products.length} products. Deactivated ${deactivatedCount} dropped products.`);
 }
 
 main()

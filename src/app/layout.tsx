@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LeanCart",
-  description: "Healthy, high-protein, low-calorie groceries delivered to your cart.",
+  title: "The Protein Pantry",
+  description: "Find your next favorite high-protein, low-calorie snack — from real brands you can trust.",
 };
 
 export default function RootLayout({
