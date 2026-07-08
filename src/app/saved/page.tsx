@@ -40,7 +40,12 @@ export default async function SavedPage() {
               key={product.id}
               className="flex items-center gap-4 bg-white border border-stone-200 rounded-2xl p-4"
             >
-              <ProductThumbnail category={product.category} size="sm" />
+              <ProductThumbnail
+                category={product.category}
+                imageUrl={product.imageUrl}
+                name={product.name}
+                size="sm"
+              />
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-medium text-stone-400 uppercase tracking-wide">
                   {product.brand}

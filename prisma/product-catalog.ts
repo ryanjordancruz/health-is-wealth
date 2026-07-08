@@ -9,6 +9,7 @@ export type SeedProduct = {
   proteinGrams: number;
   servingSize: string;
   externalUrl: string;
+  imageUrl: string | null;
 };
 
 export const products: SeedProduct[] = [
@@ -24,6 +25,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 21,
     servingSize: "1 bar (60g)",
     externalUrl: "https://www.questnutrition.com/products/protein-bars",
+    imageUrl: "https://www.questnutrition.com/cdn/shop/files/qst-003853-chocolate-chip-cookie-dough-protein-bars_1.png?v=1772649648&width=1080",
   },
   {
     id: "rxbar-chocolate-sea-salt",
@@ -37,6 +39,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 12,
     servingSize: "1 bar (52g)",
     externalUrl: "https://shop.rxbar.com/shop/protein-bars.html",
+    imageUrl: "https://shop.rxbar.com/media/catalog/product/cache/28a8540fcc2300e6173619688a1413c2/0/0/00193908001214_c1n1_hidden_gzwwju0ehbk7pyfm.jpeg",
   },
   {
     id: "perfect-bar-peanut-butter",
@@ -50,6 +53,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 17,
     servingSize: "1 bar (65g)",
     externalUrl: "https://perfectsnacks.com/",
+    imageUrl: "https://perfectsnacks.com/cdn/shop/files/carousel-1-render_49ebfa31-d85e-4ca0-b241-e12bde2a793f.png?v=1718615222&width=533",
   },
   {
     id: "kind-peanut-butter-dark-chocolate-protein-bar",
@@ -62,6 +66,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 12,
     servingSize: "1 bar (50g)",
     externalUrl: "https://www.kindsnacks.com/protein-bars",
+    imageUrl: "https://www.kindsnacks.com/cdn-cgi/image/width=1200,height=1200,f=auto,quality=90/sites/g/files/fnmzdf5536/files/migrate-product-files/ajtromchza3bbr3n7jwf.png",
   },
   {
     id: "one-bar-peanut-butter-cup",
@@ -75,6 +80,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 20,
     servingSize: "1 bar (60g)",
     externalUrl: "https://www.one1brands.com/",
+    imageUrl: "https://www.one1brands.com/content/dam/one-brands/images/home/one-bars-peanut-butter-cup-flavored-protein-bar-2-12-oz.png",
   },
   {
     id: "orgain-chocolate-chip-cookie-dough-protein-bar",
@@ -88,6 +94,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 10,
     servingSize: "1 bar (45g)",
     externalUrl: "https://orgain.com/collections/protein-bar",
+    imageUrl: "https://orgain.com/cdn/shop/files/Orgain-PackSingleGroupshot-10gProteinBars-12Pack-CCCDcopy_1024x.webp?v=1704408189",
   },
   {
     id: "gomacro-peanut-butter-chocolate-chip-macrobar",
@@ -101,6 +108,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 11,
     servingSize: "1 bar (50g)",
     externalUrl: "https://gomacro.com/collections/macrobars",
+    imageUrl: "https://gomacro.com/cdn/shop/files/2025_GM_Macrobar_Film_PBC8.png",
   },
   {
     id: "aloha-chocolate-chip-cookie-dough-protein-bar",
@@ -114,6 +122,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 14,
     servingSize: "1 bar (54g)",
     externalUrl: "https://aloha.com/collections/protein-bars",
+    imageUrl: "https://aloha.com/cdn/shop/files/842096106118_MAIN.webp?crop=center&height=280&v=1783533570&width=400",
   },
   {
     id: "quest-sour-cream-onion-protein-chips",
@@ -126,6 +135,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 21,
     servingSize: "1 bag (32g)",
     externalUrl: "https://www.questnutrition.com/products/protein-chips",
+    imageUrl: "https://www.questnutrition.com/cdn/shop/products/qst-000319_sour-cream-_-onion-original-style-protein-chips_3.png?v=1681501586&width=1080",
   },
   {
     id: "quest-chocolate-chip-protein-cookie",
@@ -138,6 +148,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 15,
     servingSize: "1 cookie (59g)",
     externalUrl: "https://www.questnutrition.com/collections/protein-cookies",
+    imageUrl: "https://www.questnutrition.com/cdn/shop/files/qst-006090-chocolate-chip-cookies_1.png?v=1746038647&width=1080",
   },
   {
     id: "lenny-larrys-chocolate-chip-complete-cookie",
@@ -150,6 +161,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 16,
     servingSize: "1 cookie (113g)",
     externalUrl: "https://www.lennylarry.com/collections/the-complete-cookie",
+    imageUrl: "https://www.lennylarry.com/cdn/shop/files/1_B_Hero_ProteinCookie_CC_4oz12ct_1000x_b42e9f8a-4a8f-4f79-aa82-ad2c8e59afb5.png?v=1780318770",
   },
   {
     id: "epic-bison-bacon-bites",
@@ -162,6 +174,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 12,
     servingSize: "1 pouch (36g)",
     externalUrl: "https://epicprovisions.com/collections/bites",
+    imageUrl: "https://epicprovisions.com/cdn/shop/files/BisonBitesBag.png?v=1740411039&width=1000",
   },
   {
     id: "wilde-chicken-waffles-protein-chips",
@@ -174,6 +187,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 12,
     servingSize: "1 bag (23g)",
     externalUrl: "https://www.wildebrands.com/collections/shop-all",
+    imageUrl: "https://www.wildebrands.com/cdn/shop/files/Chicken_Waffles_4oz_2048x2048_12.02.2025.png?v=1764704700&width=1000",
   },
   {
     id: "genius-gourmet-cheddar-cheese-protein-puffs",
@@ -186,6 +200,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 15,
     servingSize: "1 bag (28g)",
     externalUrl: "https://www.geniusgourmet.com/products/protein-puffs",
+    imageUrl: "https://www.geniusgourmet.com/cdn/shop/files/gg-ProteinPuffs-AmazonSet-Cheddar-2025-01.jpg",
   },
   {
     id: "4505-classic-chili-salt-chicharrones",
@@ -199,6 +214,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 9,
     servingSize: "1 oz (28g)",
     externalUrl: "https://4505meats.com/",
+    imageUrl: "https://4505meats.com/cdn/shop/products/Classic_2.5oz_6c5a50e1-41f4-4d13-a80b-4e3ee6d8e9dc_1200x.jpg",
   },
   {
     id: "chomps-original-beef-stick",
@@ -211,6 +227,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 10,
     servingSize: "1 stick (28g)",
     externalUrl: "https://chomps.com/collections/beef-jerky",
+    imageUrl: "https://chomps.com/cdn/shop/files/OriginalBeef_FullStick_Still_600.jpg?v=1769033667&width=1000",
   },
   {
     id: "country-archer-original-beef-jerky",
@@ -223,6 +240,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 9,
     servingSize: "1 oz (28g)",
     externalUrl: "https://shop.countryarcher.com/products/original-beef-jerky",
+    imageUrl: "https://shop.countryarcher.com/cdn/shop/files/2.5ozOriginalBeefJerky_Image1.png?v=1740424413&width=1946",
   },
   {
     id: "jacklinks-original-beef-jerky",
@@ -235,6 +253,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 11,
     servingSize: "1 oz (28g)",
     externalUrl: "https://www.jacklinks.com/products/original-beef-jerky",
+    imageUrl: "https://www.jacklinks.com/cdn/shop/files/LSU-006_JackLinks_Core_QualResearchUpdates_2.85oz_Renders_DE07_BC_V1_Front-Original.png?v=1780682341&width=2400",
   },
   {
     id: "peoples-choice-old-fashioned-original-beef-jerky",
@@ -247,6 +266,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 13,
     servingSize: "1 oz (28g)",
     externalUrl: "https://peopleschoicebeefjerky.com/products/old-fashioned-original",
+    imageUrl: "https://peopleschoicebeefjerky.com/cdn/shop/files/OldFashioned_Original_16oz_2025_2000x2000.png?v=1759945376",
   },
   {
     id: "epic-wagyu-beef-snack-strips",
@@ -259,6 +279,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 5,
     servingSize: "1 strip (10g)",
     externalUrl: "https://epicprovisions.com/collections/snack-strips",
+    imageUrl: "https://epicprovisions.com/cdn/shop/files/WagyuStrip_Caddy_Feb2024.png?v=1707164229&width=600",
   },
   {
     id: "vermont-smoke-cure-original-beef-pork-sticks",
@@ -272,6 +293,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 7,
     servingSize: "1 stick (28g)",
     externalUrl: "https://store.vermontsmokeandcure.com/collections/all",
+    imageUrl: "https://store.vermontsmokeandcure.com/cdn/shop/files/00606274325728_D1N1_8eca29cb-a8c4-4ee7-b594-37009621b8a0.jpg?v=1772037502&width=480",
   },
   {
     id: "oberto-original-grass-fed-beef-stick",
@@ -284,6 +306,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 8,
     servingSize: "1 stick (28g)",
     externalUrl: "https://www.oberto.com/",
+    imageUrl: "https://www.oberto.com/cdn/shop/files/117.png?v=1751304285",
   },
   {
     id: "golden-island-korean-bbq-pork-jerky",
@@ -296,6 +319,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 7,
     servingSize: "1 oz (28g)",
     externalUrl: "https://www.goldenislandjerky.com/shop/korean-barbecue-pork-jerky",
+    imageUrl: "https://www.goldenislandjerky.com/shop/pub/media/catalog/product/1/0/10000038416_a_2.png",
   },
   {
     id: "premier-protein-chocolate-shake",
@@ -308,6 +332,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 30,
     servingSize: "1 bottle (11.5 fl oz)",
     externalUrl: "https://www.premierprotein.com/products/chocolate-protein-shake",
+    imageUrl: "https://assets.premierprotein.com/production/a/product/Thumbnail_Chocolate_Tetra_472x542.png",
   },
   {
     id: "core-power-chocolate-42g-shake",
@@ -320,6 +345,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 42,
     servingSize: "1 bottle (14 fl oz)",
     externalUrl: "https://fairlife.com/core-power/chocolate-protein-shake-42g/",
+    imageUrl: "https://fairlife.com/wp-content/uploads/2026/03/Productcp-elite-chocolate-2023-1.webp",
   },
   {
     id: "owyn-dark-chocolate-protein-shake",
@@ -332,6 +358,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 20,
     servingSize: "1 bottle (12 fl oz)",
     externalUrl: "https://liveowyn.com/collections/protein-shakes",
+    imageUrl: "https://liveowyn.com/cdn/shop/files/owyn-008617-dark-chocolate-protein-shake.png?v=1756155502",
   },
   {
     id: "kachava-chocolate-shake",
@@ -345,6 +372,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 25,
     servingSize: "2 scoops (70g)",
     externalUrl: "https://www.kachava.com/",
+    imageUrl: "https://cdn.shopify.com/s/files/1/0199/1938/files/Product_Chocolate_1.png",
   },
   {
     id: "ritual-essential-protein-chocolate",
@@ -357,6 +385,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 20,
     servingSize: "5 tbsp (31g)",
     externalUrl: "https://ritual.com/products/essential-protein-daily-shake-18-chocolate",
+    imageUrl: "https://ritual.com/cdn/shop/files/pdp-hero-PD18-chocolate-01_a51055ea-ef0b-4a51-9c5b-4bd1ee66b793.jpg?v=1771529730&width=2000",
   },
   {
     id: "vega-protein-recovery-chocolate",
@@ -369,6 +398,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 30,
     servingSize: "1 scoop (44g)",
     externalUrl: "https://myvega.com/collections/protein-powders",
+    imageUrl: "https://myvega.com/cdn/shop/files/Vega_Performance_Protein_Recovery_Chocolate_29oz.png?v=1781636910",
   },
   {
     id: "orgain-30g-protein-shake-vanilla-bean",
@@ -381,6 +411,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 30,
     servingSize: "1 bottle (14 fl oz)",
     externalUrl: "https://orgain.com/collections/protein-shakes",
+    imageUrl: "https://orgain.com/cdn/shop/files/851770007429-v1-Orgain-30gProteinRTD-12Pack-Vanilla-20240506-Front-HIRES-web_1200px.webp?v=1731482340&width=1920",
   },
   {
     id: "optimum-nutrition-gold-standard-whey",
@@ -393,6 +424,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 24,
     servingSize: "1 scoop (30g)",
     externalUrl: "https://www.optimumnutrition.com/en-us/products/gold-standard-100-whey-protein-powder",
+    imageUrl: "https://www.optimumnutrition.com/cdn/shop/files/GSW_DRC_2lb_FOP.png?v=1776170438&width=2500",
   },
   {
     id: "nature-made-multivitamin-with-iron",
@@ -405,6 +437,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 0,
     servingSize: "1 tablet",
     externalUrl: "https://www.naturemade.com/collections/multivitamins",
+    imageUrl: "https://www.naturemade.com/cdn/shop/files/NM2518PK001964MULTICOMPLETE_5A007225ccfront_1500x.png",
   },
   {
     id: "thorne-multi-vitamin-elite",
@@ -417,6 +450,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 0,
     servingSize: "2 capsules AM + 2 capsules PM",
     externalUrl: "https://www.thorne.com/explore/multi-vitamin-elite",
+    imageUrl: null,
   },
   {
     id: "ritual-essential-for-women-multivitamin",
@@ -429,6 +463,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 0,
     servingSize: "2 capsules",
     externalUrl: "https://ritual.com/products/essential-for-women-multivitamin",
+    imageUrl: "https://ritual.com/cdn/shop/files/PDP_EFW18_Bottle.jpg?v=1770263110&width=2000",
   },
   {
     id: "optimum-nutrition-opti-men",
@@ -441,6 +476,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 0,
     servingSize: "3 tablets",
     externalUrl: "https://www.optimumnutrition.com/en-us/products/opti-men-multivitamin",
+    imageUrl: "https://www.optimumnutrition.com/cdn/shop/files/ON_OptiMen_90ct_6074229.png?v=1779369013&width=3000",
   },
   {
     id: "carlson-very-finest-fish-oil",
@@ -453,6 +489,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 0,
     servingSize: "1 tsp (5mL)",
     externalUrl: "https://www.carlsonlabs.com/products/the-very-finest-fish-oil",
+    imageUrl: "https://www.carlsonlabs.com/cdn/shop/files/088395016318_1__94905.jpg",
   },
   {
     id: "megafood-womens-advanced-multivitamin",
@@ -465,6 +502,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 0,
     servingSize: "2 tablets",
     externalUrl: "https://megafood.com/products/multi-for-women",
+    imageUrl: "https://megafood.com/cdn/shop/files/Advanced_Multi_Women_60ct.png?v=1765675684&width=2000",
   },
   {
     id: "natures-bounty-vitamin-d3-5000iu",
@@ -477,6 +515,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 0,
     servingSize: "1 softgel",
     externalUrl: "https://naturesbounty.com/products/vitamin-d3-5000-iu-240-rapid-release-softgels",
+    imageUrl: "https://naturesbounty.com/cdn/shop/products/089176.png?v=1667506882&width=750",
   },
   {
     id: "vital-proteins-collagen-peptides",
@@ -489,6 +528,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 18,
     servingSize: "2 scoops (20g)",
     externalUrl: "https://www.vitalproteins.com/products/vp-collagen-peptides",
+    imageUrl: "https://www.vitalproteins.com/cdn/shop/files/1_HERO_CP10_Paper_600x.jpg?v=1762971264",
   },
   {
     id: "amazing-grass-super-greens-original",
@@ -501,6 +541,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 2,
     servingSize: "1 scoop (8g)",
     externalUrl: "https://amazinggrass.com/products/greens-blend-the-original",
+    imageUrl: "https://amazinggrass.com/cdn/shop/files/Super_Greens_-_Original_-_30_srv_-_B_AG_AMZ_B__SuperGreens-Original_8.5oz_4000x4000_02.jpg?v=1757431359&width=480",
   },
   {
     id: "navitas-organics-cacao-powder",
@@ -513,6 +554,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 2,
     servingSize: "1 tbsp (6g)",
     externalUrl: "https://navitasorganics.com/products/cacao-powder",
+    imageUrl: "https://navitasorganics.com/cdn/shop/products/1-Navitas-Cacao-Powder-8oz-FOP_61f77ce0-3cc7-44e5-abd5-02761edee18c_compact.png?v=1678302934",
   },
   {
     id: "four-sigmatic-focus-matcha-latte",
@@ -525,6 +567,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 0,
     servingSize: "1 packet (7g)",
     externalUrl: "https://us.foursigmatic.com/products/focus-matcha-latte-box",
+    imageUrl: "https://us.foursigmatic.com/cdn/shop/files/focus-matcha-latte-packets-plp-render_dba4aa7c-abc3-4a68-ab96-65d8163b3e64.jpg",
   },
   {
     id: "bloom-nutrition-greens-superfoods",
@@ -537,6 +580,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 1,
     servingSize: "1 scoop (8g)",
     externalUrl: "https://bloomnu.com/products/greens-superfoods",
+    imageUrl: "https://bloomnu.com/cdn/shop/files/shopify_0003_mango30.jpg?v=1714942875&width=800",
   },
   {
     id: "laird-superfood-organic-prebiotic-daily-greens",
@@ -549,6 +593,7 @@ export const products: SeedProduct[] = [
     proteinGrams: 1,
     servingSize: "1 scoop (7g)",
     externalUrl: "https://lairdsuperfood.com/collections/all",
+    imageUrl: "https://lairdsuperfood.com/cdn/shop/files/LSF-Greens-Box-Sachet.png?v=1772132688",
   },
   {
     id: "orgain-organic-superfoods-powder",
@@ -561,5 +606,6 @@ export const products: SeedProduct[] = [
     proteinGrams: 2,
     servingSize: "1 scoop (8g)",
     externalUrl: "https://orgain.com/products/organic-superfoods-powder",
+    imageUrl: "https://orgain.com/cdn/shop/files/851770003957-v7-Superfoods_Probiotics-9.9oz-Original-Front-HIRES.webp?v=1708556795&width=1920",
   },
 ];

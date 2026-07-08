@@ -13,6 +13,7 @@ type Product = {
   proteinGrams: number;
   servingSize: string;
   externalUrl: string;
+  imageUrl: string | null;
 };
 
 export function ProductCard({
@@ -24,7 +25,7 @@ export function ProductCard({
 }) {
   return (
     <div className="flex flex-col bg-white border border-stone-200 rounded-2xl overflow-hidden hover:shadow-md transition-shadow">
-      <ProductThumbnail category={product.category} />
+      <ProductThumbnail category={product.category} imageUrl={product.imageUrl} name={product.name} />
       <div className="p-5 flex-1 flex flex-col">
         <p className="text-xs font-medium text-stone-400 uppercase tracking-wide mb-1">
           {product.brand}

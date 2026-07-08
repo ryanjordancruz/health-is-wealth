@@ -156,7 +156,12 @@ export default async function Home({
                 key={product.id}
                 className="flex items-center gap-3 bg-white border border-stone-200 rounded-2xl p-3 shrink-0 w-72"
               >
-                <ProductThumbnail category={product.category} size="sm" />
+                <ProductThumbnail
+                  category={product.category}
+                  imageUrl={product.imageUrl}
+                  name={product.name}
+                  size="sm"
+                />
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-medium text-stone-400 uppercase tracking-wide">
                     {product.brand}

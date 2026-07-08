@@ -18,7 +18,10 @@ export default auth((req) => {
     "default-src 'self'",
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'`,
     "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: blob:",
+    // https: (not just 'self') so real product photos can be hotlinked
+    // directly from each brand's own site/CDN — this app never uploads or
+    // stores images itself, only references brand-hosted URLs.
+    "img-src 'self' https: data: blob:",
     "font-src 'self'",
     "connect-src 'self'",
     "form-action 'self'",
