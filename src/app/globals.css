@@ -40,7 +40,7 @@ body {
 }
 
 .animate-scroll-x {
-  animation: scroll-x 100s linear infinite;
+  animation: scroll-x 115s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
