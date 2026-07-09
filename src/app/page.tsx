@@ -5,7 +5,7 @@ import { auth } from "@/auth";
 import { ProductCard } from "@/components/product-card";
 import { ProductThumbnail } from "@/components/product-thumbnail";
 import { BrandLinkButton } from "@/components/brand-link-button";
-import { HeroFoodBackground } from "@/components/hero-food-background";
+import { HeroProductReel } from "@/components/hero-product-reel";
 
 export const metadata: Metadata = {
   title: "The Protein Pantry | Find Real High-Protein Snacks",
@@ -76,6 +76,13 @@ export default async function Home({
     });
   }
 
+  // Sampled from every family's primary photo (not the filtered/searched
+  // set) so the hero reel always represents the full catalog, regardless of
+  // the current search or category filter.
+  const reelImages = [...families.values()]
+    .map((variants) => variants[0].imageUrl)
+    .filter((url): url is string => !!url);
+
   const query = activeSearch.toLowerCase();
   const matchingFamilies = [...families.values()].filter((variants) => {
     if (activeCategory && variants[0].category !== activeCategory) return false;
@@ -98,8 +105,8 @@ export default async function Home({
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-16">
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-50 via-white to-brand-50 px-6 py-12 sm:px-10 sm:py-16 mb-12">
-        <HeroFoodBackground />
+      <div className="relative overflow-hidden rounded-3xl px-6 py-12 sm:px-10 sm:py-16 mb-12">
+        <HeroProductReel images={reelImages} />
 
         <div className="relative">
           <div className="mb-8 max-w-2xl">
