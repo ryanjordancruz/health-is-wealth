@@ -34,12 +34,16 @@ model Product {
   servingSize   String
   externalUrl   String
   imageUrl      String?
+  familyId      String?
+  flavorName    String?
   active        Boolean  @default(true)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
   savedItems  SavedItem[]
   viewedItems ViewedItem[]
+
+  @@index([familyId])
 }
 
 model SavedItem {

@@ -33,27 +33,9 @@ export default async function Home({
 
   const session = await auth();
 
-  const [categoryRows, products, savedRows, recentlyViewed] = await Promise.all([
+  const [allProducts, savedRows, recentlyViewed] = await Promise.all([
     prisma.product.findMany({
       where: { active: true },
-      distinct: ["category"],
-      select: { category: true },
-      orderBy: { category: "asc" },
-    }),
-    prisma.product.findMany({
-      where: {
-        active: true,
-        ...(activeCategory ? { category: activeCategory } : {}),
-        ...(activeSearch
-          ? {
-              OR: [
-                { name: { contains: activeSearch } },
-                { description: { contains: activeSearch } },
-                { category: { contains: activeSearch } },
-              ],
-            }
-          : {}),
-      },
       orderBy: [{ category: "asc" }, { name: "asc" }],
     }),
     session?.user
@@ -71,14 +53,47 @@ export default async function Home({
         })
       : Promise.resolve([]),
   ]);
-  const categories = categoryRows.map((row) => row.category);
   const savedIds = new Set(savedRows.map((row) => row.productId));
+  const categories = [...new Set(allProducts.map((p) => p.category))].sort();
 
-  const byCategory = new Map<string, typeof products>();
-  for (const product of products) {
-    const list = byCategory.get(product.category) ?? [];
+  // Group flavor variants of the same product line into one family — a
+  // sibling's familyId points at its primary variant's own id, and the
+  // primary itself has no familyId, so `familyId ?? id` always resolves to
+  // the primary's id as the grouping key regardless of which row it is.
+  const families = new Map<string, typeof allProducts>();
+  for (const product of allProducts) {
+    const key = product.familyId ?? product.id;
+    const list = families.get(key) ?? [];
     list.push(product);
-    byCategory.set(product.category, list);
+    families.set(key, list);
+  }
+  for (const variants of families.values()) {
+    variants.sort((a, b) => {
+      const aPrimary = (a.familyId ?? a.id) === a.id;
+      const bPrimary = (b.familyId ?? b.id) === b.id;
+      if (aPrimary !== bPrimary) return aPrimary ? -1 : 1;
+      return (a.flavorName ?? a.name).localeCompare(b.flavorName ?? b.name);
+    });
+  }
+
+  const query = activeSearch.toLowerCase();
+  const matchingFamilies = [...families.values()].filter((variants) => {
+    if (activeCategory && variants[0].category !== activeCategory) return false;
+    if (!query) return true;
+    return variants.some((v) =>
+      [v.name, v.description, v.category, v.brand, v.flavorName ?? ""]
+        .join(" ")
+        .toLowerCase()
+        .includes(query),
+    );
+  });
+
+  const byCategory = new Map<string, (typeof allProducts)[]>();
+  for (const family of matchingFamilies) {
+    const cat = family[0].category;
+    const list = byCategory.get(cat) ?? [];
+    list.push(family);
+    byCategory.set(cat, list);
   }
 
   return (
@@ -182,7 +197,7 @@ export default async function Home({
       {hasFilters && (
         <div className="mb-8 flex items-center justify-between text-sm text-stone-500">
           <p>
-            {products.length} result{products.length === 1 ? "" : "s"}
+            {matchingFamilies.length} result{matchingFamilies.length === 1 ? "" : "s"}
             {activeSearch && (
               <>
                 {" "}
@@ -202,7 +217,7 @@ export default async function Home({
         </div>
       )}
 
-      {products.length === 0 ? (
+      {matchingFamilies.length === 0 ? (
         <div className="text-center py-20">
           <p className="text-lg text-stone-500">
             {hasFilters
@@ -211,15 +226,15 @@ export default async function Home({
           </p>
         </div>
       ) : (
-        Array.from(byCategory.entries()).map(([cat, items]) => (
+        Array.from(byCategory.entries()).map(([cat, families]) => (
           <section key={cat} className="mb-12">
             <h2 className="text-xl font-semibold text-stone-900 mb-4">{cat}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {items.map((product) => (
+              {families.map((variants) => (
                 <ProductCard
-                  key={product.id}
-                  product={product}
-                  isSaved={savedIds.has(product.id)}
+                  key={variants[0].id}
+                  variants={variants}
+                  savedVariantIds={variants.map((v) => v.id).filter((id) => savedIds.has(id))}
                 />
               ))}
             </div>
